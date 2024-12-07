@@ -10,12 +10,12 @@ using LaundryAPI.Models;
 namespace LaundryAPI.Controllers
 {
     [Route("/addresses")]
-    public class UserAddressController :  Controller
+    public class UserAddressController : Controller
     {
         private readonly UserDbContext _userDbContext;
         private readonly IMapper _mapper;
 
-        public UserAddressController(UserDbContext userDbContext , IMapper mapper)
+        public UserAddressController(UserDbContext userDbContext, IMapper mapper)
         {
             _userDbContext = userDbContext;
             _mapper = mapper;
@@ -28,7 +28,7 @@ namespace LaundryAPI.Controllers
             var address = _mapper.Map<AddressLine>(addressDto);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userDbContext.Profiles.FirstOrDefault
-                (p => p.UserID == userId );
+                (p => p.UserID == userId);
             address.UserId = user.Id;
             _userDbContext.Addresses.Add(address);
             await _userDbContext.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace LaundryAPI.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult GetUserAddresses()
+        public ActionResult<IEnumerable<AddressReadDto>> GetUserAddresses()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userDbContext.Profiles.AsNoTracking().

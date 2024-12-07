@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace LaundryAPI.Shared
+﻿namespace LaundryAPI.Shared
 {
     public class OperationResult<T>
     {
@@ -9,7 +7,7 @@ namespace LaundryAPI.Shared
         public string ErrorMessage { get; private set; } = string.Empty;
         public OperationResult() { }
 
-        public OperationResult(bool isSuccess,T data , string errorMessage = "")
+        public OperationResult(bool isSuccess, T data, string errorMessage = "")
         {
             IsSuccess = isSuccess;
             Data = data;

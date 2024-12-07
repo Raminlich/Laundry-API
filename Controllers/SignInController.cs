@@ -17,7 +17,7 @@ namespace LaundryAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<SignDto> SignIn(SignDto signInDto)
+        public ActionResult SignIn(SignDto signInDto)
         {
             _signInService.SignIn(signInDto);
             return Ok();

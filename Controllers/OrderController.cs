@@ -23,7 +23,7 @@ namespace LaundryAPI.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult GetOrders()
+        public ActionResult<IEnumerable<OrderReadDto>> GetOrders()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userDbContext.Profiles.AsNoTracking()
@@ -39,7 +39,7 @@ namespace LaundryAPI.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<OrderWriteDto>> SubmitOrder([FromBody] OrderWriteDto order)
+        public async Task<ActionResult<OrderReadDto>> SubmitOrder([FromBody] OrderWriteDto order)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userDbContext.Profiles.FirstOrDefault
