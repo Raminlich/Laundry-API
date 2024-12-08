@@ -6,9 +6,9 @@ namespace LaundryAPI.Models
     {
         [Key]
         [Required]
-        public int Id { get; set; }
+        public int Id { get; private set; }
         [Required]
-        public int UserId { get; set; }
+        public int UserId { get; private set; }
         [Required]
         public string Title { get; set; }
         [Required]

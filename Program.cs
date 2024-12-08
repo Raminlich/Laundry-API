@@ -26,8 +26,8 @@ namespace LaundryAPI
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddTransient<TokenService>();
             builder.Services.AddTransient<SignInService>();
-            //corsService.HandleCorsDevelop(builder);
-            corsService.HandleCorsStage(builder);
+            corsService.HandleCorsDevelop(builder);
+            // corsService.HandleCorsStage(builder);
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
