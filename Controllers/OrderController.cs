@@ -2,10 +2,8 @@
 using Laundry_API.Services;
 using LaundryAPI.Data;
 using LaundryAPI.Dtos;
-using LaundryAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace LaundryAPI.Controllers
@@ -13,14 +11,10 @@ namespace LaundryAPI.Controllers
     [Route("/orders")]
     public class OrderController : Controller
     {
-        private readonly UserDbContext _userDbContext;
-        private readonly IMapper _mapper;
         private readonly OrderService _orderService;
 
-        public OrderController(UserDbContext userDbContext, OrderService orderService,IMapper mapper)
+        public OrderController(UserDbContext userDbContext, OrderService orderService, IMapper mapper)
         {
-            _userDbContext = userDbContext;
-            _mapper = mapper;
             _orderService = orderService;
         }
 
@@ -39,7 +33,7 @@ namespace LaundryAPI.Controllers
         public async Task<ActionResult<OrderReadDto>> SubmitOrder([FromBody] OrderWriteDto order)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var orderRead = await _orderService.PlaceOrder(userId,order);
+            var orderRead = await _orderService.PlaceOrder(userId, order);
             return Ok(orderRead.Data);
         }
     }

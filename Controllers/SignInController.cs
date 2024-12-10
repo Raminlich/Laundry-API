@@ -1,6 +1,4 @@
-﻿using LaundryAPI.Data;
-using LaundryAPI.Dtos;
-using LaundryAPI.Filters;
+﻿using LaundryAPI.Dtos;
 using LaundryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
