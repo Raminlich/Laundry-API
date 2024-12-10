@@ -1,3 +1,4 @@
+using Laundry_API.Services;
 using LaundryAPI.Data;
 using LaundryAPI.Filters;
 using LaundryAPI.Services;
@@ -26,6 +27,7 @@ namespace LaundryAPI
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddTransient<TokenService>();
             builder.Services.AddTransient<SignInService>();
+            builder.Services.AddTransient<OrderService>();
             corsService.HandleCorsDevelop(builder);
             // corsService.HandleCorsStage(builder);
 

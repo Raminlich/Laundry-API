@@ -2,6 +2,7 @@
 {
     public class OrderReadDto
     {
+        public string OrderNumber { get; set; }
         public int PickUpTime { get; set; }
         public int DeliveryTime { get; set; }
         public DateTime PickUpDate { get; set; }

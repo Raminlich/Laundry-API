@@ -20,11 +20,14 @@ namespace Laundry_API.Services
 
         public async Task<OperationResult<OrderReadDto>> PlaceOrder(string userId, OrderWriteDto order)
         {
-            var user = _userDbContext.Profiles.FirstOrDefault
+            var user = _userDbContext.Profiles.
+                Include(o => o.Orders)
+                .FirstOrDefault
                     (p => p.UserID == userId);
             var cOrder = _mapper.Map<Order>(order);
             cOrder.UserId = user.Id;
             cOrder.IsActive = 1;
+            cOrder.OrderNumber = GenerateOrderNumber(user);
             _userDbContext.Orders.Add(cOrder);
             await _userDbContext.SaveChangesAsync();
             var orderRead = _mapper.Map<OrderReadDto>(order);
@@ -43,6 +46,14 @@ namespace Laundry_API.Services
             var orders = _mapper.Map<IEnumerable<OrderReadDto>>(user.Orders);
             var result = new OperationResult<IEnumerable<OrderReadDto>>(true, orders);
             return result;
+        }
+
+        private string GenerateOrderNumber(UserProfile user)
+        {
+            var orderCount = user.Orders.Count();
+            Random rnd = new Random();
+            int randomId = rnd.Next(100000, 999999);
+            return $"{randomId}-{orderCount + 1}";
         }
     }
 }

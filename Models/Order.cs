@@ -11,6 +11,8 @@ namespace LaundryAPI.Models
         [Required]
         public int UserId { get; set; }
         [Required]
+        public string OrderNumber { get; set; }
+        [Required]
         public int PickUpTime { get; set; }
         [Required]
         public int DeliveryTime { get; set; }
