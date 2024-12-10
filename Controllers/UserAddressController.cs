@@ -59,6 +59,10 @@ namespace LaundryAPI.Controllers
             var user = _userDbContext.Profiles.Include(p => p.AddressLines)
                 .FirstOrDefault(p => p.UserID == userId);
             var address = user.AddressLines.FirstOrDefault(a => a.Id == addressId);
+            if(address == null)
+            {
+                return NotFound();
+            }
             address.IsActive = false;
             await _userDbContext.SaveChangesAsync();
             return NoContent();

@@ -8,7 +8,7 @@ namespace LaundryAPI.Models
         [Required]
         public int Id { get; private set; }
         [Required]
-        public int UserId { get; private set; }
+        public int UserId { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
