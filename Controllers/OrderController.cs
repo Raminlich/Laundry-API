@@ -13,7 +13,7 @@ namespace LaundryAPI.Controllers
     {
         private readonly OrderService _orderService;
 
-        public OrderController(UserDbContext userDbContext, OrderService orderService, IMapper mapper)
+        public OrderController(OrderService orderService)
         {
             _orderService = orderService;
         }
