@@ -2,32 +2,22 @@
 {
     public class CorsService
     {
-        public CorsService()
+        private readonly WebApplicationBuilder _builder;
+
+        public CorsService(WebApplicationBuilder builder)
         {
-            
+            _builder = builder;
         }
 
-        public void HandleCorsDevelop(WebApplicationBuilder builder)
+        public void HandleCors()
         {
-            builder.Services.AddCors(options =>
+            var env = _builder.Environment.EnvironmentName;
+            var origins = _builder.Configuration.GetSection($"AllowedOrigins:{env}").Get<string[]>();
+            _builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontEnd", policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
-                });
-            });
-        }
-
-        public void HandleCorsStage(WebApplicationBuilder builder)
-        {
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowFrontEnd", policy =>
-                {
-                    policy.WithOrigins("http://192.168.1.102:2000")
+                    policy.WithOrigins(origins)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

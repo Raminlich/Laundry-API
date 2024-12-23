@@ -15,7 +15,6 @@ namespace LaundryAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var corsService = new CorsService();
             builder.Services.AddControllers(options =>
             {
                 options.Filters.Add<ModelValidation>();
@@ -28,11 +27,7 @@ namespace LaundryAPI
             builder.Services.AddTransient<TokenService>();
             builder.Services.AddTransient<SignInService>();
             builder.Services.AddTransient<OrderService>();
-            corsService.HandleCorsDevelop(builder);
-            // corsService.HandleCorsStage(builder);
-
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -47,7 +42,7 @@ namespace LaundryAPI
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
                     };
                 });
-
+            new CorsService(builder).HandleCors();
             var app = builder.Build();
 
             app.UseCors("AllowFrontEnd");
